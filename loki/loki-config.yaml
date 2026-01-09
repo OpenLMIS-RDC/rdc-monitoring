@@ -5,7 +5,6 @@ server:
   grpc_listen_port: 9096
 
 common:
-  instance_addr: 127.0.0.1
   path_prefix: /loki
   storage:
     filesystem:
@@ -43,3 +42,15 @@ compactor:
 
 limits_config:
   retention_period: 360h
+
+ruler:
+  enable_api: true
+  alertmanager_url: http://alertmanager:9093
+  ring:
+    kvstore:
+      store: inmemory
+  rule_path: /tmp/loki/rules-tmp
+  storage:
+    type: local
+    local:
+      directory: /loki/rules

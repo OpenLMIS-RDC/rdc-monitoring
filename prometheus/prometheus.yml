@@ -1,6 +1,14 @@
 global:
   scrape_interval: 15s
 
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
+rule_files:
+  - "/etc/prometheus/alert_rules.yml"
+
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
@@ -13,3 +21,16 @@ scrape_configs:
   - job_name: 'loki'
     static_configs:
       - targets: [ 'loki:3100' ]
+
+  - job_name: 'home-pc-test'
+    scheme: https
+    static_configs:
+      - targets: [ 'nonirrigable-oversubtly-lanita.ngrok-free.dev:443' ]
+        labels:
+          env: 'local-test'
+
+  - job_name: 'aws-production'
+    static_configs:
+      - targets: [ '79.125.58.51:9100' ]
+        labels:
+          env: 'production'

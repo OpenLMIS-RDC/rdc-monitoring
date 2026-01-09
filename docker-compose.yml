@@ -18,6 +18,7 @@ services:
       - '--storage.tsdb.retention.time=15d'
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
       - prometheus_data:/prometheus
     depends_on:
       - node-exporter
@@ -33,6 +34,7 @@ services:
     command: -config.file=/etc/loki/loki-config.yaml
     volumes:
       - ./loki/loki-config.yaml:/etc/loki/loki-config.yaml:ro
+      - ./loki/rules:/loki/rules:ro
       - loki_data:/loki
     ports:
       - "3100:3100"
