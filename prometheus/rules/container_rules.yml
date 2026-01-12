@@ -1,0 +1,172 @@
+groups:
+  - name: critical_containers
+    rules:
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-cadvisor-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "cadvisor"
+        annotations:
+          summary: "Critical Container Down: cAdvisor"
+          description: "CAdvisor container is down. cAdvisor is not reporting metrics."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-auth-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "auth"
+        annotations:
+          summary: "Container Down: Auth"
+          description: "Auth container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-notification-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "notification"
+        annotations:
+          summary: "Container Down: Notification"
+          description: "Notification container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-referencedata-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "referencedata"
+        annotations:
+          summary: "Container Down: Referencedata"
+          description: "Referencedata container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-redis-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "redis"
+        annotations:
+          summary: "Container Down: Redis"
+          description: "Redis container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-report-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "report"
+        annotations:
+          summary: "Container Down: Report"
+          description: "Report container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-stockmanagement-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "stockmanagement"
+        annotations:
+          summary: "Container Down: Stockmanagement"
+          description: "Stockmanagement container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-fulfillment-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "fulfillment"
+        annotations:
+          summary: "Container Down: Fulfillment"
+          description: "Fulfillment container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-requisition-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "requisition"
+        annotations:
+          summary: "Container Down: Requisition"
+          description: "Requisition container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-consul-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "consul"
+        annotations:
+          summary: "Container Down: Consul"
+          description: "Consul container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-log-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "log"
+        annotations:
+          summary: "Container Down: Log"
+          description: "Log container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-nginx-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "nginx"
+        annotations:
+          summary: "Container Down: Nginx"
+          description: "Nginx container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-hapifhir-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "hapifhir"
+        annotations:
+          summary: "Container Down: Hapifhir"
+          description: "Hapifhir container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-cce-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "cce"
+        annotations:
+          summary: "Container Down: CCE"
+          description: "CCE container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-ui-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "ui"
+        annotations:
+          summary: "Container Down: UI"
+          description: "UI container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-node-exporter-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "node-exporter"
+        annotations:
+          summary: "Container Down: NodeExporter"
+          description: "NodeExporter container is down."
+
+      - alert: ContainerDown
+        expr: absent(container_memory_usage_bytes{name="prod-promtail-1"}) == 1
+        for: 5m
+        labels:
+          severity: critical
+          name: "promtail"
+        annotations:
+          summary: "Container Down: Promtail"
+          description: "Promtail container is down."

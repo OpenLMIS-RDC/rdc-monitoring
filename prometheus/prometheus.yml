@@ -7,7 +7,7 @@ alerting:
         - targets: ['alertmanager:9093']
 
 rule_files:
-  - "/etc/prometheus/alert_rules.yml"
+  - "/etc/prometheus/rules/*.yml"
 
 scrape_configs:
   - job_name: 'prometheus'
@@ -22,15 +22,14 @@ scrape_configs:
     static_configs:
       - targets: [ 'loki:3100' ]
 
-  - job_name: 'home-pc-test'
-    scheme: https
-    static_configs:
-      - targets: [ 'nonirrigable-oversubtly-lanita.ngrok-free.dev:443' ]
-        labels:
-          env: 'local-test'
-
   - job_name: 'aws-production'
     static_configs:
-      - targets: [ '79.125.58.51:9100' ]
+      - targets: ['79.125.58.51:9100']
         labels:
           env: 'production'
+
+  - job_name: 'aws-production-cadvisor'
+    static_configs:
+      - targets: ['79.125.58.51:9180']
+        labels:
+          env: 'production-cadvisor'
