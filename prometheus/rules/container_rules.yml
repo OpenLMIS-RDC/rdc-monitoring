@@ -3,7 +3,7 @@ groups:
     rules:
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-cadvisor-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "cadvisor"
@@ -13,7 +13,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-auth-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "auth"
@@ -23,7 +23,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-notification-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "notification"
@@ -33,7 +33,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-referencedata-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "referencedata"
@@ -43,7 +43,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-redis-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "redis"
@@ -53,7 +53,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-report-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "report"
@@ -63,7 +63,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-stockmanagement-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "stockmanagement"
@@ -73,7 +73,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-fulfillment-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "fulfillment"
@@ -83,7 +83,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-requisition-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "requisition"
@@ -93,7 +93,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-consul-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "consul"
@@ -103,7 +103,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-log-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "log"
@@ -113,7 +113,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-nginx-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "nginx"
@@ -123,7 +123,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-hapifhir-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "hapifhir"
@@ -133,7 +133,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-cce-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "cce"
@@ -143,7 +143,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-ui-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "ui"
@@ -153,7 +153,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-node-exporter-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "node-exporter"
@@ -163,7 +163,7 @@ groups:
 
       - alert: ContainerDown
         expr: absent(container_memory_usage_bytes{name="prod-promtail-1"}) == 1
-        for: 5m
+        for: 2m
         labels:
           severity: critical
           name: "promtail"
