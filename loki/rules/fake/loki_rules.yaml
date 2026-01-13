@@ -2,10 +2,19 @@ groups:
   - name: production_log_alerts
     rules:
       - alert: LogErrorDetected
-        expr: count_over_time({host="production"} |= "ERROR" [1m]) > 0
+        expr: |
+          sum by (message, container) (
+            count_over_time(
+              {container=~".+", container!="ui"} 
+              |~ "(?i)(\"level\":\"error\"|\\[error\\]|level=error)"
+              | regexp "(?P<message>.*)" 
+              [1m]
+            )
+          ) > 0
         for: 0m
         labels:
           severity: critical
           source: loki
         annotations:
-          summary: "Error Log detected on Production"
+          summary: "Error Log detected on Production ({{ $labels.container }})"
+          description: "{{ $labels.message }}"

@@ -25,7 +25,8 @@ receivers:
           *Alert:* {{ .Annotations.summary }}
           *Description:* {{ .Annotations.description }}
           *Severity:* {{ .Labels.severity }}
-          *Host:* {{ .Labels.instance }}
+          *Container:* {{ .Labels.name }}
+          *Time:* {{ .StartsAt.Format "2006-01-02 15:04:05" }}
           --------------------------------
           {{ end }}
 
@@ -38,8 +39,9 @@ receivers:
         text: |
           {{ range .Alerts -}}
           *Alert:* {{ .Annotations.summary }}
-          *Description:* {{ .Annotations.description }}
           *Severity:* {{ .Labels.severity }}
-          *Host:* {{ .Labels.instance }}
+          *Time:* {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          *Log Message:* {{ .Labels.message }}
+          *Container:* {{ .Labels.container }}
           --------------------------------
           {{ end }}
