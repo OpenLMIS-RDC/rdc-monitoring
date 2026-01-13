@@ -24,12 +24,12 @@ scrape_configs:
 
   - job_name: 'aws-production'
     static_configs:
-      - targets: ['79.125.58.51:9100']
+      - targets: ['${PROD_IP}:9100']
         labels:
           env: 'production'
 
   - job_name: 'aws-production-cadvisor'
     static_configs:
-      - targets: ['79.125.58.51:9180']
+      - targets: ['${PROD_IP}:9180']
         labels:
           env: 'production-cadvisor'

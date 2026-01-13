@@ -16,8 +16,8 @@ route:
 receivers:
   - name: 'slack-notifications'
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/XXX/XXX/XXX'
-        channel: '#notifications-rdc-prod'
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '${SLACK_WEBHOOK_CHANNEL_NAME}'
         send_resolved: true
         title: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }} ({{ .Alerts.Firing | len }} firing)'
         text: |
@@ -32,7 +32,7 @@ receivers:
 
   - name: 'slack-logs'
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/XXX/XXX/XXX'
+      - api_url: '${SLACK_WEBHOOK_URL}'
         channel: '#notifications-rdc-prod'
         send_resolved: false
         title: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }} ({{ .Alerts.Firing | len }} firing)'

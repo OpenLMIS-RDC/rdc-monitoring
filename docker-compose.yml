@@ -12,16 +12,17 @@ services:
   prometheus:
     image: prom/prometheus:v3.9.0
     container_name: prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time=15d'
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/prometheus.template.yml:/etc/prometheus/prometheus.template.yml:ro
+      - ./prometheus/entrypoint.sh:/entrypoint.sh:ro
       - ./prometheus/rules:/etc/prometheus/rules:ro
       - prometheus_data:/prometheus
     depends_on:
       - node-exporter
+    environment:
+      - PROD_IP=${PROD_IP}
+      - PROMETHEUS_RETENTION=${PROMETHEUS_RETENTION:-15d}
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
     ports:
       - "9090:9090"
     networks:
@@ -46,7 +47,12 @@ services:
     image: prom/alertmanager:v0.30.0
     container_name: alertmanager
     volumes:
-      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ./alertmanager/alertmanager.template.yml:/etc/alertmanager/alertmanager.template.yml
+      - ./alertmanager/entrypoint.sh:/entrypoint.sh:ro
+    environment:
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - SLACK_WEBHOOK_CHANNEL_NAME=${SLACK_WEBHOOK_CHANNEL_NAME}
+    entrypoint: [ "/bin/sh", "/entrypoint.sh" ]
     ports:
       - "9093:9093"
     networks:
