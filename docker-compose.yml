@@ -29,6 +29,25 @@ services:
       - monitoring
     restart: always
 
+  prometheus-meta:
+    image: prom/prometheus:v3.9.0
+    container_name: prometheus-meta
+    volumes:
+      - ./prometheus/prometheus-meta.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/rules_meta/meta_rules.yml:/etc/prometheus/rules/meta_rules.yml:ro
+      - prometheus_meta_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=3d'
+      - '--storage.tsdb.wal-compression'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9091:9090"
+    networks:
+      - monitoring
+    restart: always
+
   loki:
     image: grafana/loki:3.6.3
     container_name: loki
@@ -75,6 +94,7 @@ services:
 
 volumes:
   prometheus_data:
+  prometheus_meta_data:
   grafana_data:
   loki_data:
 
