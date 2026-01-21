@@ -9,7 +9,14 @@ if [ -z "$PROD_IP" ]; then
     exit 1
 fi
 
-sed "s|\${PROD_IP}|$PROD_IP|g" "$TEMPLATE" > "$CONFIG"
+if [ -z "UAT_IP" ]; then
+    echo "UAT_IP environment variable is missing!"
+    exit 1
+fi
+
+sed -e "s|\${PROD_IP}|$PROD_IP|g" \
+    -e "s|\${UAT_IP}|$UAT_IP|g" \
+    "$TEMPLATE" > "$CONFIG"
 exec /bin/prometheus \
     --config.file="$CONFIG" \
     --storage.tsdb.path=/prometheus \
