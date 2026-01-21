@@ -21,6 +21,7 @@ services:
       - node-exporter
     environment:
       - PROD_IP=${PROD_IP}
+      - UAT_IP=${UAT_IP}
       - PROMETHEUS_RETENTION=${PROMETHEUS_RETENTION:-15d}
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
     ports:

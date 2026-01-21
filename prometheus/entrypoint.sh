@@ -9,7 +9,7 @@ if [ -z "$PROD_IP" ]; then
     exit 1
 fi
 
-if [ -z "UAT_IP" ]; then
+if [ -z "$UAT_IP" ]; then
     echo "UAT_IP environment variable is missing!"
     exit 1
 fi
