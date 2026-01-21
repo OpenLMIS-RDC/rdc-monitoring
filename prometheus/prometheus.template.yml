@@ -21,3 +21,15 @@ scrape_configs:
       - targets: ['${PROD_IP}:9180']
         labels:
           env: 'production-cadvisor'
+
+  - job_name: 'aws-uat'
+    static_configs:
+      - targets: ['${UAT_IP}:9100']
+        labels:
+          env: 'uat'
+
+  - job_name: 'aws-uat-cadvisor'
+    static_configs:
+      - targets: ['${UAT_IP}:9180']
+        labels:
+          env: 'uat-cadvisor'
