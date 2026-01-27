@@ -21,6 +21,7 @@ services:
       - node-exporter
     environment:
       - PROD_IP=${PROD_IP}
+      - PROD_REPORTING_IP=${PROD_REPORTING_IP}
       - UAT_IP=${UAT_IP}
       - PROMETHEUS_RETENTION=${PROMETHEUS_RETENTION:-15d}
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
@@ -59,6 +60,18 @@ services:
       - loki_data:/loki
     ports:
       - "3100:3100"
+    networks:
+      - monitoring
+    restart: always
+
+  blackbox:
+    image: prom/blackbox-exporter:v0.28.0
+    container_name: blackbox
+    command: --config.file=/config/blackbox.yml
+    volumes:
+      - ./blackbox/blackbox.yml:/config/blackbox.yml
+    ports:
+      - "9115:9115"
     networks:
       - monitoring
     restart: always
