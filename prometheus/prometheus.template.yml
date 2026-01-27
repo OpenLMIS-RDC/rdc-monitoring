@@ -12,13 +12,13 @@ rule_files:
 scrape_configs:
   - job_name: 'aws-production'
     static_configs:
-      - targets: ['52.58.91.18:9100']
+      - targets: ['${PROD_IP}:9100']
         labels:
           env: 'production'
 
   - job_name: 'aws-production-cadvisor'
     static_configs:
-      - targets: ['52.58.91.18:9180']
+      - targets: ['${PROD_IP}:9180']
         labels:
           env: 'production-cadvisor'
 
@@ -40,20 +40,20 @@ scrape_configs:
       module: [ http_2xx_ignore_ssl ]
     static_configs:
       - targets:
-          - "https://52.58.91.18/auth"
-          - "https://52.58.91.18/notification"
-          - "https://52.58.91.18/referencedata"
-          - "https://52.58.91.18/redis"
-          - "https://52.58.91.18/report"
-          - "https://52.58.91.18/stockmanagement"
-          - "https://52.58.91.18/fulfillment"
-          - "https://52.58.91.18/requisition"
-          - "https://52.58.91.18/consul"
-          - "https://52.58.91.18/log"
-          - "https://52.58.91.18/nginx"
-          - "https://52.58.91.18/hapifhir"
-          - "https://52.58.91.18/cce"
-          - "https://52.29.12.75/"
+          - "https://${PROD_IP}/auth"
+          - "https://${PROD_IP}/notification"
+          - "https://${PROD_IP}/referencedata"
+          - "https://${PROD_IP}/redis"
+          - "https://${PROD_IP}/report"
+          - "https://${PROD_IP}/stockmanagement"
+          - "https://${PROD_IP}/fulfillment"
+          - "https://${PROD_IP}/requisition"
+          - "https://${PROD_IP}/consul"
+          - "https://${PROD_IP}/log"
+          - "https://${PROD_IP}/nginx"
+          - "https://${PROD_IP}/hapifhir"
+          - "https://${PROD_IP}/cce"
+          - "https://${PROD_REPORTING_IP}/"
     relabel_configs:
       - source_labels: [ __address__ ]
         target_label: __param_target
