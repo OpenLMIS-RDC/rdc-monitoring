@@ -40,6 +40,8 @@ scrape_configs:
       module: [ http_2xx_ignore_ssl ]
     static_configs:
       - targets:
+          - "https://${PROD_URL}/"
+          - "https://${PROD_REPORTING_URL}/"
           - "https://${PROD_NLB_URL}/auth"
           - "https://${PROD_NLB_URL}/notification"
           - "https://${PROD_NLB_URL}/referencedata"
@@ -49,7 +51,6 @@ scrape_configs:
           - "https://${PROD_NLB_URL}/requisition"
           - "https://${PROD_NLB_URL}/hapifhir"
           - "https://${PROD_NLB_URL}/cce"
-          - "https://${PROD_REPORTING_URL}/"
     relabel_configs:
       - source_labels: [ __address__ ]
         target_label: __param_target
