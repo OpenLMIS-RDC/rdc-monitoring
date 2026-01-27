@@ -34,7 +34,7 @@ scrape_configs:
         labels:
           env: 'uat-cadvisor'
 
-  - job_name: 'blackbox-http'
+  - job_name: 'blackbox-http-prod'
     metrics_path: /probe
     params:
       module: [ http_2xx_ignore_ssl ]
@@ -51,6 +51,31 @@ scrape_configs:
           - "https://${PROD_NLB_URL}/requisition"
           - "https://${PROD_NLB_URL}/hapifhir"
           - "https://${PROD_NLB_URL}/cce"
+    relabel_configs:
+      - source_labels: [ __address__ ]
+        target_label: __param_target
+      - source_labels: [ __param_target ]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox:9115
+
+  - job_name: 'blackbox-http-uat'
+    metrics_path: /probe
+    params:
+      module: [ http_2xx_ignore_ssl ]
+    static_configs:
+      - targets:
+          - "https://${UAT_URL}/"
+          - "https://${UAT_REPORTING_URL}/"
+          - "https://${UAT_NLB_URL}/auth"
+          - "https://${UAT_NLB_URL}/notification"
+          - "https://${UAT_NLB_URL}/referencedata"
+          - "https://${UAT_NLB_URL}/report"
+          - "https://${UAT_NLB_URL}/stockmanagement"
+          - "https://${UAT_NLB_URL}/fulfillment"
+          - "https://${UAT_NLB_URL}/requisition"
+          - "https://${UAT_NLB_URL}/hapifhir"
+          - "https://${UAT_NLB_URL}/cce"
     relabel_configs:
       - source_labels: [ __address__ ]
         target_label: __param_target

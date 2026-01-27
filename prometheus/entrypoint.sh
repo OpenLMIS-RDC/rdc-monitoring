@@ -29,11 +29,23 @@ if [ -z "$UAT_IP" ]; then
     exit 1
 fi
 
+if [ -z "$UAT_REPORTING_URL" ]; then
+    echo "UAT_REPORTING_URL environment variable is missing!"
+    exit 1
+fi
+
+if [ -z "$UAT_NLB_URL" ]; then
+    echo "UAT_NLB_URL environment variable is missing!"
+    exit 1
+fi
+
 sed -e "s|\${PROD_IP}|$PROD_IP|g" \
     -e "s|\${PROD_URL}|$PROD_URL|g" \
     -e "s|\${PROD_REPORTING_URL}|$PROD_REPORTING_URL|g" \
     -e "s|\${PROD_NLB_URL}|$PROD_NLB_URL|g" \
     -e "s|\${UAT_IP}|$UAT_IP|g" \
+    -e "s|\${UAT_REPORTING_URL}|$UAT_REPORTING_URL|g" \
+    -e "s|\${UAT_NLB_URL}|$UAT_NLB_URL|g" \
     "$TEMPLATE" > "$CONFIG"
 exec /bin/prometheus \
     --config.file="$CONFIG" \

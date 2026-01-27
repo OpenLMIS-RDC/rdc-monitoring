@@ -25,6 +25,8 @@ services:
       - PROD_REPORTING_URL=${PROD_REPORTING_URL}
       - PROD_NLB_URL=${PROD_NLB_URL}
       - UAT_IP=${UAT_IP}
+      - UAT_REPORTING_URL=${UAT_REPORTING_URL}
+      - UAT_NLB_URL=${UAT_NLB_URL}
       - PROMETHEUS_RETENTION=${PROMETHEUS_RETENTION:-15d}
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
     ports:
