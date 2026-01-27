@@ -9,8 +9,13 @@ if [ -z "$PROD_IP" ]; then
     exit 1
 fi
 
-if [ -z "$PROD_REPORTING_IP" ]; then
-    echo "PROD_REPORTING_IP environment variable is missing!"
+if [ -z "$PROD_REPORTING_URL" ]; then
+    echo "PROD_REPORTING_URL environment variable is missing!"
+    exit 1
+fi
+
+if [ -z "$PROD_NLB_URL" ]; then
+    echo "PROD_NLB_URL environment variable is missing!"
     exit 1
 fi
 
@@ -20,7 +25,8 @@ if [ -z "$UAT_IP" ]; then
 fi
 
 sed -e "s|\${PROD_IP}|$PROD_IP|g" \
-    -e "s|\${PROD_REPORTING_IP}|$PROD_REPORTING_IP|g" \
+    -e "s|\${PROD_REPORTING_URL}|$PROD_REPORTING_URL|g" \
+    -e "s|\${PROD_NLB_URL}|$PROD_NLB_URL|g" \
     -e "s|\${UAT_IP}|$UAT_IP|g" \
     "$TEMPLATE" > "$CONFIG"
 exec /bin/prometheus \
