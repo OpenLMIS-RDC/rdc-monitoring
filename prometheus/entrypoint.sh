@@ -2,57 +2,25 @@
 TEMPLATE="/etc/prometheus/prometheus.template.yml"
 CONFIG="/tmp/prometheus.yml"
 
+REQUIRED_VARS="PROD_IP PROD_URL PROD_REPORTING_IP PROD_REPORTING_URL PROD_NLB_URL
+  UAT_IP UAT_URL UAT_REPORTING_IP UAT_REPORTING_URL UAT_NLB_URL"
+
 RETENTION="${PROMETHEUS_RETENTION:-15d}"
 
-if [ -z "$PROD_IP" ]; then
-    echo "PROD_IP environment variable is missing!"
-    exit 1
-fi
+cp "$TEMPLATE" "$CONFIG"
 
-if [ -z "$PROD_URL" ]; then
-    echo "PROD_URL environment variable is missing!"
-    exit 1
-fi
+for VAR_NAME in $REQUIRED_VARS; do
+    eval VAR_VALUE=\$$VAR_NAME
 
-if [ -z "$PROD_REPORTING_URL" ]; then
-    echo "PROD_REPORTING_URL environment variable is missing!"
-    exit 1
-fi
+    if [ -z "$VAR_VALUE" ]; then
+        echo "ERROR: Environment variable $VAR_NAME is missing!"
+        exit 1
+    fi
 
-if [ -z "$PROD_NLB_URL" ]; then
-    echo "PROD_NLB_URL environment variable is missing!"
-    exit 1
-fi
+    sed -i "s|\${$VAR_NAME}|$VAR_VALUE|g" "$CONFIG"
+done
 
-if [ -z "$UAT_IP" ]; then
-    echo "UAT_IP environment variable is missing!"
-    exit 1
-fi
-
-if [ -z "$UAT_URL" ]; then
-    echo "UAT_URL environment variable is missing!"
-    exit 1
-fi
-
-if [ -z "$UAT_REPORTING_URL" ]; then
-    echo "UAT_REPORTING_URL environment variable is missing!"
-    exit 1
-fi
-
-if [ -z "$UAT_NLB_URL" ]; then
-    echo "UAT_NLB_URL environment variable is missing!"
-    exit 1
-fi
-
-sed -e "s|\${PROD_IP}|$PROD_IP|g" \
-    -e "s|\${PROD_URL}|$PROD_URL|g" \
-    -e "s|\${PROD_REPORTING_URL}|$PROD_REPORTING_URL|g" \
-    -e "s|\${PROD_NLB_URL}|$PROD_NLB_URL|g" \
-    -e "s|\${UAT_IP}|$UAT_IP|g" \
-    -e "s|\${UAT_URL}|$UAT_URL|g" \
-    -e "s|\${UAT_REPORTING_URL}|$UAT_REPORTING_URL|g" \
-    -e "s|\${UAT_NLB_URL}|$UAT_NLB_URL|g" \
-    "$TEMPLATE" > "$CONFIG"
+echo "Config generated successfully."
 exec /bin/prometheus \
     --config.file="$CONFIG" \
     --storage.tsdb.path=/prometheus \

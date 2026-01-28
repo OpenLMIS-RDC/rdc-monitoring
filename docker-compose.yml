@@ -19,16 +19,8 @@ services:
       - prometheus_data:/prometheus
     depends_on:
       - node-exporter
-    environment:
-      - PROD_IP=${PROD_IP}
-      - PROD_URL=${PROD_URL}
-      - PROD_REPORTING_URL=${PROD_REPORTING_URL}
-      - PROD_NLB_URL=${PROD_NLB_URL}
-      - UAT_IP=${UAT_IP}
-      - UAT_URL=${UAT_URL}
-      - UAT_REPORTING_URL=${UAT_REPORTING_URL}
-      - UAT_NLB_URL=${UAT_NLB_URL}
-      - PROMETHEUS_RETENTION=${PROMETHEUS_RETENTION:-15d}
+    env_file:
+      - ./.env
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
     ports:
       - "9090:9090"

@@ -8,8 +8,8 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "Instance {{ $labels.instance }} down"
-          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute."
+          summary: "[{{ $labels.env | toUpper }}] Instance {{ $labels.instance }} is down"
+          description: "The {{ $labels.role }} server ({{ $labels.instance }}) has been down for more than 1 minute."
 
       # 2. Alert if CPU usage is > 90% for 5 minutes
       - alert: HighCPUUsage
@@ -18,8 +18,8 @@ groups:
         labels:
           severity: warning
         annotations:
-          summary: "High CPU usage on {{ $labels.instance }}"
-          description: "CPU usage is {{ $value | printf \"%.2f\" }}%."
+          summary: "[{{ $labels.env | toUpper }}] High CPU usage on {{ $labels.role }}"
+          description: "CPU usage is {{ $value | printf \"%.2f\" }}% on {{ $labels.instance }}."
 
       # 3. Alert if Disk Space is < 10% free
       - alert: LowDiskSpace
@@ -28,5 +28,5 @@ groups:
         labels:
           severity: warning
         annotations:
-          summary: "Low Disk Space on {{ $labels.instance }}"
-          description: "Only {{ $value | printf \"%.2f\" }}% disk space left."
+          summary: "[{{ $labels.env | toUpper }}] Low Disk Space on {{ $labels.role }}"
+          description: "Only {{ $value | printf \"%.2f\" }}% disk space left on {{ $labels.instance }}."
