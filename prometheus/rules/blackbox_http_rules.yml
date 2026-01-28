@@ -1,0 +1,23 @@
+groups:
+  - name: blackbox_availability
+    rules:
+      # Service not reachable
+      - alert: ServiceNotReachable
+        expr: probe_success == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "[{{ $labels.env | toUpper }}] {{ $labels.service_name }} is not reachable"
+          description: "The {{ $labels.service_name }} service on {{ $labels.env }} is failing checks."
+
+      # High latency warning
+      - alert: EndpointSlow
+        # Probe takes longer than 2 seconds
+        expr: probe_duration_seconds > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "[{{ $labels.env | toUpper }}] {{ $labels.service_name }} is responding slowly"
+          description: "Response time is {{ $value | humanizeDuration }}. Threshold is 2s for over 5 minutes."

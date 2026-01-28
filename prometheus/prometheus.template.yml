@@ -59,6 +59,19 @@ scrape_configs:
       - target_label: __address__
         replacement: blackbox:9115
 
+      - source_labels: [ job ]
+        regex: blackbox-http-(.*)
+        replacement: $1
+        target_label: env
+      - source_labels: [ __param_target ]
+        regex: https?://.*/([^/]+)/?
+        replacement: $1
+        target_label: service_name
+      - source_labels: [ service_name, __param_target ]
+        regex: ;https?://([^/.]+)[^/]*.*
+        replacement: $1
+        target_label: service_name
+
   - job_name: 'blackbox-http-uat'
     metrics_path: /probe
     params:
@@ -83,3 +96,16 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox:9115
+
+      - source_labels: [ job ]
+        regex: blackbox-http-(.*)
+        replacement: $1
+        target_label: env
+      - source_labels: [ __param_target ]
+        regex: https?://.*/([^/]+)/?
+        replacement: $1
+        target_label: service_name
+      - source_labels: [ service_name, __param_target ]
+        regex: ;https?://([^/]+).*
+        replacement: $1
+        target_label: service_name
