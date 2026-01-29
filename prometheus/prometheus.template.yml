@@ -33,13 +33,6 @@ scrape_configs:
           env: 'uat'
           role: 'reporting'
 
-  - job_name: 'rds-postgres'
-    static_configs:
-      - targets: [ 'postgres-exporter:9187' ]
-        labels:
-          env: 'uat'
-          role: 'database'
-
   - job_name: 'cadvisor'
     static_configs:
       - targets: ['${PROD_IP}:9180']
